@@ -1,0 +1,68 @@
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,900&display=swap');
+
+/* root */
+:root {
+    --primary: #4f515a;
+    --secondary: #ebebeb;
+    --warning: #da0f41;
+}
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito', sans-serif;
+    color: var(--primary);
+}
+body {
+    background: #fafafa;
+}
+a {
+    text-decoration: none;
+}
+ /* button styles */
+button, .btn {
+    background: var(--secondary);
+    border-radius: 8px;
+    border: 0;
+    padding: 8px 12px;
+    font-weight: 600;
+    display: inline-block;
+    cursor: pointer;
+}
+button:hover, .btn:hover{
+    background: var(--primary);
+    color: #ffff;
+}
+button:disabled {
+    opacity: 0.5;
+    color: var(--primary);
+    cursor: not-allowed;
+    background: var(--secondary);
+}
+/* form styles */
+ form {
+     max-width: 400px;
+     margin: 0 auto;
+     padding: 30px;
+     border-radius: 8px;
+     box-shadow: 1px 2px 3px rgba(50, 50, 50, 0.05);
+     border: 1px solid var(--secondary);
+     background: #ffff;
+ }
+input, textarea {
+    border: 0;
+    border-bottom: 1px solid var(--secondary);
+    padding: 10px;
+    outline: none;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    margin: 20px auto;
+}
+.error {
+    font-size: 14px;
+    color: var(--warning);
+    margin: 14px 0;
+}
+
+
