@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { projectFirebase } from '../firebase/config'
+import { projectFirestore } from '../firebase/config'
 
 const useCollection = (collection) => {
 
@@ -11,8 +11,10 @@ const useCollection = (collection) => {
         isPanding.value = true
     
         try {
-            await projectFirebase.collection(collection).add(doc)
+            const res = await projectFirestore.collection(collection).add(doc)
             isPanding.value = false
+
+            return res
         } 
         catch(err) {
             console.log(err.message)

@@ -5,40 +5,69 @@
       <label>Music cover image</label>
       <input type="file" @change="handleFile">
       <div class="error">{{ fileError }}</div>
-      <button>Create</button>
+      <button v-if="!isPanding">Create</button>
+      <button v-else disabled>Saving...</button>
   </form>
 </template>
 
 <script>
 import { ref } from 'vue'
+import useStorage from '@/composabels/useStorage'
+import useCollection from '@/composabels/useCollection'
+import getUser from '@/composabels/getUser'
+import { timestamp } from '@/firebase/config'
+import { useRouter } from 'vue-router'
 export default {
     setup() {
+        const { url, uploadImage, filePath } = useStorage()
+        const { addDoc, error } = useCollection('playlist')
+        const { user } = getUser()
+
+        const router = useRouter()
+
         const title = ref('')
         const description = ref('')
         const file = ref(null)
         const fileError = ref(null)
+        const isPanding = ref(false)
 
-        const handleSubmit = () => {
+        const handleSubmit = async () => {
             if (file.value) {
-                console.log(title.value, description.value)
+                isPanding.value = true
+                await uploadImage(file.value)
+                const res = await addDoc({
+                    title: title.value,
+                    description: description.value,
+                    userId: user.value.uid,
+                    userName: user.value.displayName,
+                    coverUrl: url.value,
+                    filePath: filePath.value,
+                    songs: [],
+                    createdAt: timestamp()
+                })
+                isPanding.value = false
+                if (!error.value) {
+                    router.push({ name: 'PlaylistDetail', params: {id: res.id}})
+                }
             }
-        }
+        }   
 
         const types = ['image/png', 'image/jpeg']
 
         const handleFile = (e) => {
-            const selected = e.target.files[0]
+            let selected = e.target.files[0]
             console.log(selected)
 
             if (selected && types.includes(selected.type)) {
                 file.value = selected
+                fileError.value = null
             } else {
                 file.value = null
                 fileError.value = 'Please select an image (png or jpeg)'
             }
         }
 
-        return { title, description, handleSubmit, handleFile, fileError }
+        return { title, description, handleSubmit, handleFile, fileError, isPanding }
     }
 
 }
