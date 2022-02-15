@@ -12,9 +12,11 @@
 <script>
 import useLogin from '@/composabels/useLogin'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
     setup() {
         const { error, login, isPanding } = useLogin()
+        const router = useRouter()
 
         const email = ref('')
         const password = ref('')
@@ -22,7 +24,7 @@ export default {
         const handleSubmit = async () => {
             const res = login(email.value, password.value)
             if (!error.value) {
-                console.log('loged successfuly')
+                router.push({ name: 'UserList'})
             }
         }
 

@@ -13,17 +13,19 @@
 <script>
 import useSignup from '@/composabels/useSignup'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
     setup() {
         const { error, signup, isPanding } = useSignup()
         const displayName = ref('')
         const email = ref('')
         const password = ref('')
+        const router = useRouter()
 
         const handleSubmit = async () => {
             await signup(email.value, password.value, displayName.value)
             if (!error.value) {
-                console.log('user signedup successfuly')
+                router.push({ name: 'UserList'})
             }
         }
         return {displayName, email, password, error, isPanding, handleSubmit}

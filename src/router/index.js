@@ -4,6 +4,7 @@ import Login from '../views/authfolder/Login.vue'
 import Signup from '../views/authfolder/Signup.vue'
 import CreatePlaylist from '../views/playlist/CreatePlaylist.vue'
 import PlaylistDetail from '../views/playlist/PlaylistDetail.vue'
+import UserList from '../views/playlist/UserList.vue'
 // router guard
 import { projectAuth } from '../firebase/config'
 
@@ -45,6 +46,12 @@ const routes = [
     component: PlaylistDetail,
     beforeEnter: requireAuth,
     props: true
+  },
+  {
+    path: '/userlist/user',
+    name: 'UserList',
+    component: UserList,
+    beforeEnter: requireAuth
   }
 ]
 
